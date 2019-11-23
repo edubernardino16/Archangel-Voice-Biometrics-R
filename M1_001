@@ -1,0 +1,56 @@
+#Máquina 1
+#Versão 0.0.1 - teste
+
+#0 - Packages e Libraries
+
+rm(list = ls(all.names = TRUE))
+install.packages("tuneR")
+install.packages("seewave")
+install.packages("signal")
+library(tuneR)
+library(seewave)
+library(signal)
+
+#Variáveis Universais
+ta = 22050 #taxa de amostragem. Fixa para todos os audios que vou usar.
+passo = 1/ta #passo
+energia_ruido <- 200000 # Energia de ruído, obtida empiricamente. Valor calculado 444788.3
+
+#Funções Universais
+
+energia <- function(c){
+  e <- sum(c^2)/length(c)
+  e
+}
+
+
+#Esta parte é desenvolvida de acordo com a fonte de dados do cliente.
+#Para a POC, vamos importar os arquivos do corpus de fala da Universidade de Lisboa
+arquivos <- list.files(path = "C:/Users/Eduardo/Documents/Archangel/Brasil/")
+
+#1 - Importar voz
+
+a <- 8 #trocar aqui para escolher o arquivo
+som <- readWave(paste("C:/Users/Eduardo/Documents/Archangel/Brasil/",arquivos[a],sep = ""))  
+#play(som)
+
+#2 - Quebra da voz em blocos de 10 ms
+
+n_col <- round(length(som@left)/220)
+frame <- matrix(som@left,nrow = 220, ncol = n_col)
+
+#3 - Exclui partes sem voz
+
+e <- NULL
+inactive_frames <- NULL
+active_frames <- NULL
+for(n in 1:n_col){
+  e[n] <- sum(frame[,n]^2)/220 #energia de cada frame
+  if(e[n] > energia_ruido){ active_frames <- c(active_frames,n) }
+  else{ inactive_frames <- c(inactive_frames,n) }
+}
+
+active_frames <- t(frame[,active_frames])
+
+#Escreve o resultado
+write.table(active_frames, file = paste("C:/Users/Eduardo/Documents/Archangel/teste_M1_001/frame_",a,".csv",sep = ""),sep = ";")
