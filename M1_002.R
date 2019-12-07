@@ -128,12 +128,12 @@ LOG <- data.frame(
   
 #1 - Leitura de áudios
 #Lê áudios de 10ms do coletor
-arquivos <- list.files(path = "C:/Users/edube/Documents/Archangel/teste_M1")
+arquivos <- list.files(path = "/01_data")
 
 for(a in 1:length(arquivos)){
 tic()
 ti <- Sys.time()
-som <- read.table(paste("C:/Users/edube/Documents/Archangel/teste_M1/",arquivos[a],sep = ""),sep = ";")
+som <- read.table(paste("/01_data/",arquivos[a],sep = ""),sep = ";")
 som <- as.array(som$x)
 t <- toc()
 t <- t$toc - t$tic
@@ -181,7 +181,7 @@ LOG <- rbind(LOG,lista)
 #6 - Escreve frame
 tic()
 ti <- Sys.time()
-write.table(frame,file = paste("C:/Users/edube/Documents/Archangel/teste_M2/",arquivos[a],sep = ""))
+write.table(frame,file = paste("/03_output/",arquivos[a],sep = ""))
 tf <- Sys.time()
 t <- toc()
 t <- t$toc - t$tic
@@ -201,5 +201,5 @@ print(paste("Terminado processo",a,sep = " "))
 
 #7 - Escreve LOG
 nome_arquivo <- paste("LOG_",format(Sys.time(), "%Y%M%d"),sep = "")
-write.table(LOG,file = paste("C:/Users/edube/Documents/Archangel/teste_M2/",nome_arquivo,sep = ""),sep = ";")
+write.table(LOG,file = paste("/04_logs/",nome_arquivo,sep = ""),sep = ";")
 rm(list = ls(all.names = TRUE))
