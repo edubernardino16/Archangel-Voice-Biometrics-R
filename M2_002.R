@@ -31,14 +31,14 @@ LOG <- data.frame(
 
 #1 - Lê os frames do KAFKA, VoiceMatrix e modelo_nn
 
-arquivos <- list.files(path = "C:/Users/edube/Documents/Archangel/teste_M2/")
+arquivos <- list.files(path = "/03_output/")
 modelo_nn <- 
-VoiceMatrix <- read.csv(file = "C:/Users/edube/Documents/Archangel/teste_M2/")
+VoiceMatrix <- read.csv(file = "/03_output/")
 
 for(a in 1:length(arquivos)){
 tic()
 ti <- Sys.time()
-frame <- as.data.frame(read.csv(file = paste("C:/Users/edube/Documents/Archangel/teste_M2/",arquivos[a],sep = ""),sep = ";")) 
+frame <- as.data.frame(read.csv(file = paste("/03_output/",arquivos[a],sep = ""),sep = ";")) 
 max_log <- ifelse(nrow(LOG) == 0,0,max(LOG$ID_LOGS))
 t <- toc()
 t <- t$toc - t$tic
@@ -88,5 +88,5 @@ if(TIPO = 3){
 
 #7 - Escreve LOG
 nome_arquivo <- paste("LOG_",format(Sys.time(), "%Y%M%d"),sep = "")
-write.table(LOG,file = paste("C:/Users/edube/Documents/Archangel/teste_M3/",nome_arquivo,sep = ""),sep = ";")
+write.table(LOG,file = paste("/04_logs/",nome_arquivo,sep = ""),sep = ";")
 rm(list = ls(all.names = TRUE))
