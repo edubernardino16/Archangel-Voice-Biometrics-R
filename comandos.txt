@@ -1,0 +1,11 @@
+git clone https://github.com/edubernardino16/archangel
+cd archangel
+docker build -t archangel/dockerfile .
+docker images
+docker run -d -v /volarchangel -p 80:80 archangel/dockerfile
+
+
+#Criando um POD
+kubectl create -f deployment.yaml
+
+
