@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+
+  rstudio:
+    build:
+      context: .
+      dockerfile: dockerfile
+    environment:
+      USER: edubernardino16
+      PASSWORD: archangel
+      ROOT: "FALSE"
+    volumes:
+      - home/ubuntu/archangel/
+    ports:
+      - "80:80"
